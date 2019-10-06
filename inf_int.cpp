@@ -8,6 +8,10 @@ void inf_int::erasePreZeros() {
     }
     digits.erase(digits.begin(), digits.begin() + numErase);
     length = digits.length();
+    if (length == 0) {
+        digits = "0";
+        length = 1;
+    }
 }
 
 inf_int::inf_int(): digits("0"), length(0), thesign(true) {}
@@ -84,7 +88,6 @@ bool operator<(const inf_int& num1, const inf_int& num2) {
 }
 
 inf_int operator+(const inf_int& num1, const inf_int& num2) {
-    cout << num1 << " " << num2;
     if (num1.thesign == true && num2.thesign == false) {
         inf_int copy = num2;
         copy.thesign = true;
@@ -113,6 +116,7 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
         else carry = 0;
         result.digits = to_string(result_digit) + result.digits;
     }
+    result.digits = result.digits.substr(0, result.digits.length() - 1);
 
     for (int i = iter; i < num1.length; i++) {
         digit1 = atoi(&num1.digits.substr(num1.length - i - 1, 1)[0]);
@@ -127,7 +131,7 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
 
     for (int i = iter; i < num2.length; i++) {
         digit2 = atoi(&num2.digits.substr(num2.length - i - 1, 1)[0]);
-        result_digit = digit1 + carry; 
+        result_digit = digit2 + carry; 
         if (result_digit > 10) { 
             carry = 1;
             result_digit -= 10;
@@ -136,28 +140,27 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
         result.digits = to_string(result_digit) + result.digits;
     }
 
-    result.digits = result.digits.substr(0, result.digits.length() - 1);
     result.length = result.digits.length();
 
     return result;
 }
 
 inf_int operator-(const inf_int& num1, const inf_int& num2) {
-    if ((num1.thesign) ? (num1 < num2) : (num1 > num2)) {
-        inf_int result = operator-(num2, num1);
-        result.thesign = !result.thesign;
-        return result;
-    }
     if (num1.thesign == true && num2.thesign == false) {
         inf_int copy = num2;
         copy.thesign = true;
+        cout << num1 << " " << copy << endl;
         return operator+(num1, copy);
     }
     if (num1.thesign == false && num2.thesign == true) {
         inf_int copy = num2;
         copy.thesign = false;
-        cout << operator+(num2, copy) << endl;
-        return operator+(num2, copy);
+        return operator+(num1, copy);
+    }
+    if ((num1.thesign) ? (num1 < num2) : (num1 > num2)) {
+        inf_int result = operator-(num2, num1);
+        result.thesign = !result.thesign;
+        return result;
     }
     int carry = 0;
     int digit1, digit2, result_digit;

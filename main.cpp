@@ -9,9 +9,9 @@ using namespace std;
 int main()
 {
 	inf_int a("-10");
-	inf_int b("9");
+	inf_int b("-19");
 
-	cout << (a - b);
+	cout << (b - a);
 	return 0;
 }
 
