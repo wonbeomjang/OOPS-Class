@@ -8,6 +8,8 @@ using namespace std;
 class inf_int
 {
 private :
+
+public :
     string digits;
     unsigned int length;
     bool thesign;   // true if positive , false if negative.
@@ -15,8 +17,6 @@ private :
     // ex) -12345555555555 -> digits="55555555554321", length=14, thesign=false
     // you may insert additional private members here.
     void erasePreZeros();
-
-public :
     inf_int();               // assign 0 as a default value
     inf_int(int);
     inf_int(const char* );

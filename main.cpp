@@ -8,10 +8,11 @@ using namespace std;
 
 int main()
 {
-	inf_int a("-10");
-	inf_int b("-19");
+	inf_int a("100");
+	inf_int b("9913414");
+	inf_int c = b * a;
 
-	cout << (b - a);
+	cout << c;
 	return 0;
 }
 

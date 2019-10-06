@@ -14,7 +14,7 @@ void inf_int::erasePreZeros() {
     }
 }
 
-inf_int::inf_int(): digits("0"), length(0), thesign(true) {}
+inf_int::inf_int(): digits("0"), length(1), thesign(true) {}
 
 inf_int::inf_int(int num) {
     digits = to_string(num);
@@ -142,6 +142,7 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
 
     result.length = result.digits.length();
 
+    result.erasePreZeros();
     return result;
 }
 
@@ -149,7 +150,6 @@ inf_int operator-(const inf_int& num1, const inf_int& num2) {
     if (num1.thesign == true && num2.thesign == false) {
         inf_int copy = num2;
         copy.thesign = true;
-        cout << num1 << " " << copy << endl;
         return operator+(num1, copy);
     }
     if (num1.thesign == false && num2.thesign == true) {
@@ -216,25 +216,32 @@ inf_int operator-(const inf_int& num1, const inf_int& num2) {
 inf_int operator*(const inf_int& num1, const inf_int& num2) {
     int carry = 0;
     int digit1, digit2, result_digit;
-    inf_int result, temp;
+    inf_int result;
     // implement XOR logical operation using AND and OR
     result.thesign = (num1.thesign || num2.thesign) && !(num1.thesign && num2.thesign);
-    temp.thesign = result.thesign;
+    result.thesign = !result.thesign;
 
     for(int i = 0; i < num2.length; i++) {
-        digit2 = num2.digits.at(num2.length - i - 1);
+        inf_int temp;
+        temp.thesign = num1.thesign;
+        digit2 = atoi(&num2.digits.substr(num2.length - i - 1, 1)[0]);
         for(int j = 0; j < num1.length; j++) {
-            digit1 = num1.digits.at(num1.length - j - 1);
+            digit1 = atoi(&num1.digits.substr(num1.length - j - 1, 1)[0]);
             result_digit = digit1 * digit2 + carry;
             carry = result_digit / 10;
             result_digit %= 10;
             temp.digits = to_string(result_digit);
 
-            for(int ap = 0; ap < i; i++) {
+            for(int ap = 0; ap < i + j; ap++) {
                 temp.digits.append("0");
             }
+            temp.length = temp.digits.length();
             result = result + temp;
         }
+    }
+
+    if (carry) {
+        result.digits = to_string(carry) + result.digits;
     }
 
     return result;
