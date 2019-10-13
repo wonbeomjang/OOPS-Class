@@ -113,6 +113,7 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
     inf_int result;
     result.thesign = num1.thesign;
 
+    // do add operation in same length with carry
     for(int i = 0; i < iter; i++) {
         digit1 = num1.digits[num1.length - i - 1] - '0';
         digit2 = num2.digits[num2.length - i - 1] - '0';
@@ -127,6 +128,7 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
     }
     result.digits = result.digits.substr(0, result.digits.length() - 1);
 
+    // add remained digits in num1 (num1.length > num2.length)
     for (int i = iter; i < num1.length; i++) {
         digit1 = num1.digits[num1.length - i - 1] - '0';
         result_digit = digit1 + carry; 
@@ -138,8 +140,9 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
         result.digits = to_string(result_digit) + result.digits;
     }
 
+    // add remained digits in num2 (num1.length < num2.length)
     for (int i = iter; i < num2.length; i++) {
-        digit2 = num2.digits[num2.length - i - 1] - '0';
+        digit2 = num2.digits[num2.length - i - 1] - '0'; 
         result_digit = digit2 + carry; 
         if (result_digit > 9) { 
             carry = 1;
@@ -149,8 +152,9 @@ inf_int operator+(const inf_int& num1, const inf_int& num2) {
         result.digits = to_string(result_digit) + result.digits;
     }
 
+    // if carry is remaied add carry
     if(carry) {
-        result.digits = "1" + result.digits;
+        result.digits = to_string(carry) + result.digits;
     }
 
     result.length = result.digits.length();
@@ -188,6 +192,7 @@ inf_int operator-(const inf_int& num1, const inf_int& num2) {
     inf_int result;
     result.thesign = num1.thesign;
 
+    // do subtract operation in same length with carry
     for(int i = 0; i < iter; i++) {
         digit1 = num1.digits[num1.length - i - 1] - '0';
         digit2 = num2.digits[num2.length - i - 1] - '0';
@@ -203,6 +208,7 @@ inf_int operator-(const inf_int& num1, const inf_int& num2) {
 
     result.digits = result.digits.substr(0, result.digits.length() - 1);
 
+    // subtract remained digits in num1 (num1.length > num2.length)
     for (int i = iter; i < num1.length; i++) {
         digit1 = num1.digits[num1.length - i - 1] - '0';
         result_digit = digit1 + carry; 
@@ -214,6 +220,7 @@ inf_int operator-(const inf_int& num1, const inf_int& num2) {
         result.digits = to_string(result_digit) + result.digits;
     }
 
+    // subtract remained digits in num2 (num1.length < num2.length)
     for (int i = iter; i < num2.length; i++) {
         digit2 = num2.digits[num2.length - i - 1] - '0';
         result_digit = digit1 + carry; 
