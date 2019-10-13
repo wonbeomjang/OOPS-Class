@@ -5,33 +5,57 @@
 #include <stdlib.h>
 
 using namespace std;
+typedef enum {add, sub, mul} operation;
+
 
 int main()
-{
-	inf_int a, e;
-	inf_int b(100);
-	inf_int c("321111111111122222222222233333333333444444444445555555555");
-	inf_int d("123451987651234572749499923455022211");
-	inf_int f=d;
-	inf_int g(f);
-
-	// cin >> g ;   // not required
-
-	a=b*c;
-	// e=g/f;       // not required
-
-	b=c-d;
+{	
+	srand(time(0));
+	inf_int num1, num2, res1, res2;	
+	int int_num1, int_num2;
+	int operation_index;
 
 
-	if (f==d) {
-		cout << "a : " << a << endl;
-		cout << "b : " << b << endl;
-		cout << "c : " << c << endl;
-		cout << "d : " << d << endl;
-		// cout << "e : " << e << endl;
-		cout << "f : " << f << endl;
-		// cout << "g : " << g << endl;
+	int num_correct = 0;
+	int num_wrong = 0;
+
+	for(int i = 0; i < 100000; i++) {
+		// sample
+		num1 = int_num1 = rand() % 10000 - 5000;
+		num2 = int_num2 = rand() % 10000 - 5000;
+		if (!(i%10000))
+			cout << '[' << i << '/' << "100000] " << "[correct: " << num_correct << ']' << " [worng: "<< num_wrong << ']'<< endl;
+
+		switch (rand()%3) {
+		case add:
+			res1 = num1 + num2;
+			res2 = int_num1 + int_num2;
+			if (res1 != res2)
+				cout << num1 << "+" << num2 << "=" << res1 << "=" << res2 << endl;
+				break;
+
+		case sub:
+			res1 = num1 - num2;
+			res2 = int_num1 - int_num2;
+			if (res1 != res2)
+				cout << num1 << "-" << num2 << "=" << res1 << "=" << res2 << endl;
+				break;
+
+		case mul:
+			res1 = num1 * num2;
+			res2 = int_num1 * int_num2;
+			if (res1 != res2)
+				cout << num1 << "*" << num2 << "=" << res1 << "=" << res2 << endl;
+				break;
+		}
+
+		if(res1 == res2)
+			num_correct++;
+		else
+			num_wrong++;
 	}
+
+	cout << "correct: " << num_correct << " worng: " << num_wrong << endl;
 
 	return 0;
 }
