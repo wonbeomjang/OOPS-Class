@@ -234,8 +234,7 @@ inf_int operator-(const inf_int& num1, const inf_int& num2) {
 }
 
 inf_int operator*(const inf_int& num1, const inf_int& num2) {
-    int carry = 0;
-    int digit1, digit2, result_digit;
+    int digit1, digit2;
     inf_int result;
     // implement XOR logical operation using AND and OR
 
