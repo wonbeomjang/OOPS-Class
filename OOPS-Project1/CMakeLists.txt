@@ -3,4 +3,4 @@ project(main)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(main main.cpp src/utils.cpp src/student_list_manager.cpp src/student.cpp src/person.cpp src/display.cpp)student_list_manager
+add_executable(main main.cpp src/utils.cpp src/student_list_manager.cpp src/student.cpp src/person.cpp src/display.cpp)
