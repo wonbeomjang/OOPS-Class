@@ -11,8 +11,9 @@ Date: Oct. 15th, 2019
 In terminal type following command
 
 ```
-    make 
-    make clean
+cmake CMakeLists.txt
+make
+./main
 ```
 or
 

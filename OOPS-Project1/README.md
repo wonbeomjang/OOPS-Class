@@ -20,7 +20,7 @@ Second, you can use <b>bash (tested on macOS 10.15)</b>.<br>Make sure there is a
 2. Input following commands consecutively.
 
 ```
-cmake CMakeFiles.txt
+cmake CMakeLists.txt
 make
 ./main
 ```
